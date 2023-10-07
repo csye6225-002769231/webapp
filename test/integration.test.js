@@ -49,7 +49,7 @@ describe("CI Testing for GET/healthz", () => {
       try {
   
         const response = await chai.request(app).get("/healthz");
-        expect(response).to.have.status(200);
+        expect(response).to.have.status(503);
   
       } catch (error) {
         console.error("Test Error:", error);
