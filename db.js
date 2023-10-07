@@ -29,7 +29,9 @@ async function bootstrapDatabase() {
     } catch (error) {
         console.log("Failed creating tables")
     }
-};
+
+
+
 
 
 // const conn = () => {
