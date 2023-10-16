@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 
 const sequelize = require('../db.js').sequelize;
-const account = require('../model/account.js').account;
+const account = require('./account.js').account;
 
 const assignment = sequelize.define("assignment", {
     id: {
