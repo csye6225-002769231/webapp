@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 
 
-const csv = require('./csvparser.js');
+// const csv = require('./csvparser.js');
 const basicAuth = require("./middleware/auth.js");
 const assignment_controllers=require("./controllers/assignment_controllers.js")
 
@@ -29,7 +29,7 @@ app.all('/healthz', async (req, res) => {
  
    try {
      // Attempt to connect to the database asynchronously
-     const val = await database.bootstrapDatabase();
+     const val = await database.conn;
      
      const bodyLength = parseInt(req.get('Content-Length') || '0', 10);
  
