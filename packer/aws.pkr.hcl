@@ -36,7 +36,7 @@ source "amazon-ebs" "csye6225-ami" {
   region          = "${var.aws-region}"
   ami_name        = "csye6225-ami-${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   ami_description = "CSYE6225 Assignment-05"
-  profile         = "${var.aws-profile}"
+  # profile         = "${var.aws-profile}"
 
   aws_polling {
     delay_seconds = 120
