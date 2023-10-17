@@ -3,6 +3,10 @@ name: Packer Build after Merge
 on:
   [pull_request]
 
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read 
+
 jobs:
   Run-Packer-Build-Check:
     runs-on: ubuntu-latest
@@ -22,10 +26,10 @@ jobs:
         run: zip -r webapp.zip .
 
       - name: AWS Configure
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{secrets.ACCESS_KEY}}
-          aws-secret-access-key: ${{secrets.SECRET_ACCESS_KEY}}
+          role-to-assume: ${{secrets.ACCESS_KEY}}
+          role-session-name: AWS Session 
           aws-region: us-east-1
 
       - name: Initialization
