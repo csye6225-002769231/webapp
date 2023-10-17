@@ -31,12 +31,12 @@ jobs:
           aws-region: us-east-1
 
       - name: Initialization
-        run:
+        run: |
           cd packer
           packer init aws.pkr.hcl
 
       - name: Build AMI
-        run:
+        run: |
           cd packer
           packer build aws.pkr.hcl
 
