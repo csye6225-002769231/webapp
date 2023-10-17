@@ -1,6 +1,6 @@
 # Project Name
 
-Brief description of your project.
+WebApp - CSYE 6225
 
 ## Table of Contents
 
