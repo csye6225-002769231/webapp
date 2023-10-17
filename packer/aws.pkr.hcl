@@ -47,6 +47,10 @@ source "amazon-ebs" "csye6225-ami" {
     "us-east-1",
   ]
 
+  ami_users = [
+  "269080509846",
+  ]
+
   instance_type = "t2.micro"
   source_ami    = "${var.source-ami}"
   ssh_username  = "${var.ssh-username}"
