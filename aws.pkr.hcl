@@ -9,7 +9,7 @@ packer {
 
 variable "aws-region" {
   type    = string
-  default = "{{env `AWS_REGION`}}"
+  default = "us-east-1"
 }
 
 # variable "aws-profile" {
