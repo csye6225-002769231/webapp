@@ -17,9 +17,9 @@ sudo "CHECKPOINT_DISABLE=1"
 
 sudo apt install -y nodejs npm postgresql
 
-sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'root1234';"
+sudo -u postgres psql -c "ALTER USER $DATABASE_USER WITH PASSWORD '$DATABASE_PASS';"
           
-PGPASSWORD="root1234" psql -U "postgres" -h "127.0.0.1" -p 5432 
+PGPASSWORD="$DATABASE_PASS" psql -U "$DATABASE_USER" -h "$DATABASE_HOST" -p 5432 
 
 sudo apt install unzip
 
