@@ -35,7 +35,7 @@ jobs:
         id: fmt
         run: |
           set -e
-          if ! packer fmt -check ami.pkr.hcl; then
+          if ! packer fmt -check aws.pkr.hcl; then
             echo "Template is not formatted correctly. Please run 'packer fmt' locally and push the changes."
             exit 1
           fi
