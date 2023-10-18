@@ -69,12 +69,12 @@ build {
     "source.amazon-ebs.csye6225-ami"
   ]
 
-    provisioner "file" {
+  provisioner "file" {
     source      = "user.csv"
     destination = "/tmp/user.csv"
   }
 
-    provisioner "file" {
+  provisioner "file" {
     source      = "webapp.zip"
     destination = "/tmp/webapp.zip"
   }
