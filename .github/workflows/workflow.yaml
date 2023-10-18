@@ -15,12 +15,12 @@ jobs:
       - name: Set .env file
         run: |
           touch .env
-          echo DATABASE_USER="postgres" >> .env
-          echo DATABASE_PASS="root1234" >> .env
-          echo DATABASE="postgres" >> .env
-          echo DATABASE_HOST="127.0.0.1" >> .env
-          echo DATABASE_PORT="5432" >> .env
-          echo DIALECT="postgres" >> .env
+          echo DATABASE_USER="${{secrets.DATABASE_USER}}" >> .env
+          echo DATABASE_PASS="${{secrets.DATABASE_PASS}}" >> .env
+          echo DATABASE="${{secrets.DATABASE}}" >> .env
+          echo DATABASE_HOST="${{secrets.DATABASE_HOST}}1" >> .env
+          echo DATABASE_PORT="${{secrets.DATABASE_PORT}}" >> .env
+          echo DIALECT="${{secrets.DIALECT}}" >> .env
           echo DEFAULTUSERSPATH="" >> .env
           cat .env
           ls -la
