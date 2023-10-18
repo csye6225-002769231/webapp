@@ -85,7 +85,7 @@ build {
   provisioner "shell" {
     script = "setup.sh"
 
-    environment_vars = ["DATABASE='${var.database}'", "DATABASE_USER='${var.database_user}'", "DATABASE_HOST='${var.database_host}'",
-    "DATABASE_PASS='${var.database_pass}'", "PORT='${var.database_port}'"]
+    environment_vars = ["DATABASE=${var.database}", "DATABASE_USER=${var.database_user}", "DATABASE_HOST=${var.database_host}",
+    "DATABASE_PASS=${var.database_pass}", "PORT=${var.database_port}"]
   }
 }
