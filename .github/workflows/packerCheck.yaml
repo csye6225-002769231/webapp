@@ -8,18 +8,59 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create Environment File
+        run: |
+          touch .env
+          echo "DATABASE_PASS=${{secrets.DATABASE_PASS}}" >> .env
+          echo "DATABASE=${{secrets.DATABASE}}" >> .env
+          echo "DATABASE_USER=${{secrets.DATABASE_USER}}" >> .env
+          echo "DATABASE_PORT=${{secrets.DATABASE_PORT}}" >> .env
+          echo "DATABASE_HOST=${{secrets.DATABASE_HOST}}" >> .env
+          echo "DIALECT=${{secrets.DIALECT}}" >> .env
+          echo "DEFAULTUSERSPATH=${{secrets.DEFAULTUSERSPATH}}" >> .env
+
+      - name: Create user.csv
+        run: |
+          touch user.csv
+          echo "${{secrets.USER_CSV}}" >> user.csv
+
+      - name: Artifact Setup
+        run: zip -r webapp.zip .
+
       - name: Install Packer
         run: |
-          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          sudo apt update && sudo apt install packer
+          packer init aws.pkr.hcl
+
+      - name: Packer Validation Check
+        id: fmt
+        run: |
+          set -e
+          if ! packer fmt -check ami.pkr.hcl; then
+            echo "Template is not formatted correctly. Please run 'packer fmt' locally and push the changes."
+            exit 1
+          fi
 
       - name: Packer Validation
         run: |
-          cd packer
-          packer init aws.pkr.hcl
-          packer fmt aws.pkr.hcl
           packer validate aws.pkr.hcl
+        env:
+          DATABASE: ${{secrets.DATABASE}}
+          DATABASE_PASS: ${{secrets.DATABASE_PASS}} 
+          DATABASE_USER: ${{secrets.DATABASE_USER}}
+          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+          DATABASE_HOST: ${{secrets.DATABASE_HOST}} 
+          DIALECT: ${{secrets.DIALECT}} 
+          DEFAULTUSERSPATH: ${{secrets.DEFAULTUSERSPATH}} 
+          AMI_USER_DEMO: ${{secrets.AMI_USER_DEMO}} 
+          AWS_REGION: ${{secrets.AWS_REGION}} 
+          SOURCE_AMI: ${{secrets.SOURCE_AMI}} 
+          SSH_USERNAME: ${{secrets.SSH_USERNAME}}
+          SUBNET_ID: ${{secrets.SUBNET_ID}}
+
+
+          
+
+
 
 
 

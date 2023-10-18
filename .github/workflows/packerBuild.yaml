@@ -19,8 +19,23 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
+      - name: Create Environment File
+        run: |
+          touch .env
+          echo "DATABASE_PASS=${{secrets.DATABASE_PASS}}" >> .env
+          echo "DATABASE=${{secrets.DATABASE}}" >> .env
+          echo "DATABASE_USER=${{secrets.DATABASE_USER}}" >> .env
+          echo "DATABASE_PORT=${{secrets.DATABASE_PORT}}" >> .env
+          echo "DATABASE_HOST=${{secrets.DATABASE_HOST}}" >> .env
+          echo "DIALECT=${{secrets.DIALECT}}" >> .env
+          echo "DEFAULTUSERSPATH=${{secrets.DEFAULTUSERSPATH}}" >> .env
+
+      - name: Create user.csv
+        run: |
+          touch user.csv
+          echo "${{secrets.USER_CSV}}" >> user.csv
+
       - name: Artifact Setup
-        if: success()
         run: zip -r webapp.zip .
 
       - name: AWS Configure
@@ -32,13 +47,24 @@ jobs:
 
       - name: Initialization
         run: |
-          cd packer
           packer init aws.pkr.hcl
 
       - name: Build AMI
         run: |
-          cd packer
           packer build aws.pkr.hcl
+        env:
+          DATABASE: ${{secrets.DATABASE}}
+          DATABASE_PASS: ${{secrets.DATABASE_PASS}} 
+          DATABASE_USER: ${{secrets.DATABASE_USER}}
+          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
+          DATABASE_HOST: ${{secrets.DATABASE_HOST}} 
+          DIALECT: ${{secrets.DIALECT}} 
+          DEFAULTUSERSPATH: ${{secrets.DEFAULTUSERSPATH}} 
+          AMI_USER_DEMO: ${{secrets.AMI_USER_DEMO}} 
+          AWS_REGION: ${{secrets.AWS_REGION}} 
+          SOURCE_AMI: ${{secrets.SOURCE_AMI}} 
+          SSH_USERNAME: ${{secrets.SSH_USERNAME}}
+          SUBNET_ID: ${{secrets.SUBNET_ID}}
 
 
 

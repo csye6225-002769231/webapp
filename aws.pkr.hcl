@@ -9,27 +9,27 @@ packer {
 
 variable "aws-region" {
   type    = string
-  default = "us-east-1"
+  default = "{{env `AWS_REGION`}}"
 }
 
-variable "aws-profile" {
-  type    = string
-  default = "dev"
-}
+# variable "aws-profile" {
+#   type    = string
+#   default = "{{env `AWS_PROFILE`}}"
+# }
 
 variable "source-ami" {
   type    = string
-  default = "ami-06db4d78cb1d3bbf9"
+  default = "{{env `SOURCE_AMI`}}"
 }
 
 variable "ssh-username" {
   type    = string
-  default = "admin"
+  default = "{{env `SSH_USERNAME`}}"
 }
 
 variable "subnet-id" {
   type    = string
-  default = "subnet-0731f505253577b49"
+  default = "{{env `SUBNET_ID`}}"
 }
 
 source "amazon-ebs" "csye6225-ami" {
@@ -44,11 +44,11 @@ source "amazon-ebs" "csye6225-ami" {
   }
 
   ami_regions = [
-    "us-east-1",
+    "${var.aws-region}",
   ]
 
   ami_users = [
-  "269080509846",
+    "{{env `AMI_USER_DEMO`}}",
   ]
 
   instance_type = "t2.micro"
@@ -68,6 +68,16 @@ build {
   sources = [
     "source.amazon-ebs.csye6225-ami"
   ]
+
+    provisioner "file" {
+    source      = "user.csv"
+    destination = "/tmp/user.csv"
+  }
+
+    provisioner "file" {
+    source      = "webapp.zip"
+    destination = "/tmp/webapp.zip"
+  }
 
   provisioner "shell" {
     script = "setup.sh"
