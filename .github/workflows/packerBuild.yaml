@@ -19,6 +19,9 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Create Environment File
         run: |
           touch .env
@@ -35,7 +38,27 @@ jobs:
           sudo apt-get update
           sudo apt-get install postgresql postgresql-client
           sudo service postgresql start
-          pg_isready    
+          pg_isready   
+
+      - name: Create PG user and connect
+        run: |
+          # Load environment variables from .env file
+          source .env
+          
+          # Change the user's password using superuser privileges
+          sudo -u postgres psql -c "ALTER USER $DATABASE_USER WITH PASSWORD '$DATABASE_PASS';"
+          
+          # Connect to the 'postgres' database using the specified user and password
+          PGPASSWORD=$DATABASE_PASS psql -U $DATABASE_USER -d $DATABASE -h $DATABASE_HOST -p $DATABASE_PORT
+
+      - name: Run Integration Tests
+        run: |
+          # Load environment variables from .env file
+          source .env
+
+          # Run integration tests using environment variables
+          npm run test 
+          rm -r node_modules 
 
       - name: Create user.csv
         run: |
