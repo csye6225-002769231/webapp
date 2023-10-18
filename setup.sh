@@ -10,8 +10,18 @@ sudo "CHECKPOINT_DISABLE=1"
 
 sudo apt install -y nodejs npm postgresql
 
-sudo -u postgres psql -c "ALTER USER '$(env DATABASE_USER)' WITH PASSWORD '$(env DATABASE_PASS)';"
+sudo -u postgres psql -c "ALTER USER '$DATABASE_USER' WITH PASSWORD '$DATABASE_PASS';"
           
-PGPASSWORD="$(env DATABASE_PASS)" psql -U "$(env DATABASE_USER)" -d "$(env DATABASE)" -h "$(env DATABASE_HOST)"-p "$(env DATABASE_PORT)"
+PGPASSWORD="$DATABASE_PASS" psql -U "$DATABASE_USER" -d "$DATABASE" -h "$DATABASE_HOST"-p "$DATABASE_PORT"
 
 sudo apt install unzip
+
+cd /tmp
+
+mv user.csv /opt
+
+unzip webapp.zip
+
+cd webapp
+
+npm i
