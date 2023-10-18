@@ -9,27 +9,27 @@ packer {
 
 variable "aws-region" {
   type    = string
-  default = "us-east-1"
+  default = env("AWS_REGION")
 }
 
 # variable "aws-profile" {
 #   type    = string
-#   default = "{{env `AWS_PROFILE`}}"
+#   default = env("AWS_PROFILE")
 # }
 
 variable "source-ami" {
   type    = string
-  default = "ami-06db4d78cb1d3bbf9"
+  default = env("SOURCE_AMI")
 }
 
 variable "ssh-username" {
   type    = string
-  default = "admin"
+  default = env("SSH_USERNAME")
 }
 
 variable "subnet-id" {
   type    = string
-  default = "subnet-0731f505253577b49"
+  default = env("SUBNET_ID")
 }
 
 source "amazon-ebs" "csye6225-ami" {
@@ -72,10 +72,13 @@ build {
 
   provisioner "file" {
     source      = "webapp.zip"
-    destination = "~/"
+    destination = "/tmp/webapp.zip"
   }
 
   provisioner "shell" {
-    script = "setup.sh"
+    script = "setup.sh",
+    # environment_vars = ["DATABASE_USER= "
+
+    # ]
   }
 }

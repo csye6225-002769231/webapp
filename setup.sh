@@ -23,9 +23,9 @@ PGPASSWORD="root1234" psql -U "postgres" -h "127.0.0.1" -p 5432
 
 sudo apt install unzip
 
-unzip webapp.zip -d webapp
+unzip webapp.zip webapp
 
-cd webapp
+sudo cd webapp
 
 sudo npm i
 
