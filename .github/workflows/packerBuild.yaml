@@ -32,6 +32,8 @@ jobs:
           echo "DATABASE_HOST=${{secrets.DATABASE_HOST}}" >> .env
           echo "DIALECT=${{secrets.DIALECT}}" >> .env
           echo "DEFAULTUSERSPATH=${{secrets.DEFAULTUSERSPATH}}" >> .env
+          cat .env
+          ls -la
 
       - name: Set up PostgreSQL
         run: |
