@@ -88,7 +88,7 @@ To run this project, you will need to add the following environment variables to
     # Change the user's password using superuser privileges
     sudo -u postgres psql -c "ALTER USER $DATABASE_USER WITH PASSWORD '$DATABASE_PASS';"
           
-    # Connect to the 'postgres' database using the specified user and password
+    # Connect to the 'postgres' databasee using the specified user and password
     PGPASSWORD=$DATABASE_PASS psql -U $DATABASE_USER -d $DATABASE -h $DATABASE_HOST -p $DATABASE_PORT
 
 ### Configuration
