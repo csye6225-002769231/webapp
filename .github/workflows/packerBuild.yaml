@@ -53,16 +53,16 @@ jobs:
         run: |
           packer build aws.pkr.hcl
         env:
-          PKR_VAR_database: ${{secrets.DATABASE}}
+          PKR_VAR_database: '${{secrets.DATABASE}}'
           PKR_VAR_database_pass: ${{secrets.DATABASE_PASS}} 
           PKR_VAR_database_user: ${{secrets.DATABASE_USER}}
           PKR_VAR_database_port: ${{secrets.DATABASE_PORT}}
           PKR_VAR_database_host: ${{secrets.DATABASE_HOST}} 
           DIALECT: ${{secrets.DIALECT}} 
-          DEFAULTUSERSPATH: ${{secrets.DEFAULTUSERSPATH}} 
-          AMI_USER_DEMO: ${{secrets.AMI_USER_DEMO}} 
+          DEFAULTUSERSPATH: '${{secrets.DEFAULTUSERSPATH}}' 
+          AMI_USER_DEMO: "${{secrets.AMI_USER_DEMO}}" 
           PKR_VAR_aws-region: "${{ secrets.AWS_REGION }}"
-          PKR_VAR_source-ami: "${{ secrets.SOURCE_AMI }} "
+          PKR_VAR_source-ami: "${{ secrets.SOURCE_AMI }}"
           # PKR_VAR_ssh-username: "${{ secrets.SSH_USERNAME }}"
           PKR_VAR_subnet-id: "${{ secrets.SUBNET_ID }}"
 
