@@ -15,6 +15,26 @@ variable "source-ami" {
   type = string
 }
 
+variable "database" {
+  type = string
+}
+
+variable "database_user" {
+  type = string
+}
+
+variable "database_host" {
+  type = string
+}
+
+variable "database_pass" {
+  type = string
+}
+
+variable "database_port" {
+  type = string
+}
+
 variable "ssh-username" {
   type    = string
   default = "admin"
@@ -64,5 +84,8 @@ build {
 
   provisioner "shell" {
     script = "setup.sh"
+
+    environment_vars = ["DATABASE='${var.database}'", "DATABASE_USER='${var.database_user}'", "DATABASE_HOST='${var.database_host}'",
+    "DATABASE_PASS='${var.database_pass}'", "PORT='${var.database_port}'"]
   }
 }
