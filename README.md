@@ -75,7 +75,7 @@ To run this project, you will need to add the following environment variables to
 
 ### Installation
 
-1. To install postgreSQL:
+1. To install PostgreSQL:
 
    ```bash
     sudo apt-get install postgresql postgresql-client
