@@ -8,8 +8,8 @@ packer {
 }
 
 variable "aws-region" {
-  type    = string
-  default = env("AWS_REGION")
+  type = string
+  # default = env("AWS_REGION")
 }
 
 # variable "aws-profile" {
@@ -18,18 +18,18 @@ variable "aws-region" {
 # }
 
 variable "source-ami" {
-  type    = string
-  default = env("SOURCE_AMI")
+  type = string
+  # default = env("SOURCE_AMI")
 }
 
 variable "ssh-username" {
   type    = string
-  default = env("SSH_USERNAME")
+  # default = env("SSH_USERNAME")
 }
 
 variable "subnet-id" {
   type    = string
-  default = env("SUBNET_ID")
+  # default = env("SUBNET_ID")
 }
 
 source "amazon-ebs" "csye6225-ami" {
