@@ -44,7 +44,7 @@ source "amazon-ebs" "csye6225-ami" {
   }
 
   ami_users = [
-    "{{env `AMI_USER_DEMO`}}",
+    "269080509846",
   ]
 
   instance_type = "t2.micro"
