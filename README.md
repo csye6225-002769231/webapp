@@ -22,7 +22,7 @@ This is a Assignment RestAPI which lets its users to CRUD on Assignments.
 
 List the prerequisites and dependencies required to run your project. This may include Node.js, PostgreSQL, etc.
 
-- Node.js (v18)
+- Node.js (v 18)
 - PostgreSQL (v16)
 - A Droplet on DigitalOcean runing Debian 12
 
