@@ -14,7 +14,7 @@ variable "aws-region" {
 
 # variable "aws-profile" {
 #   type    = string
-  # default = "{{env `AWS_PROFILE`}}"
+# default = "{{env `AWS_PROFILE`}}"
 # }
 
 variable "source-ami" {
@@ -74,10 +74,10 @@ build {
     source      = "webapp.zip"
     destination = "~/"
   }
-  
-  environment_vars=[
-    "DATABASE_USER={{ env `DATABASE_USER` }}" , "DATABASE_PASS={{ env `DATABASE_PASS` }}",
-     "DATABASE_HOST={{ env `DATABASE_HOST` }}" , "DATABASE_PORT={{ env `DATABASE_PORT` }}"
+
+  environment_vars = [
+    "DATABASE_USER={{ env `DATABASE_USER` }}", "DATABASE_PASS={{ env `DATABASE_PASS` }}",
+    "DATABASE_HOST={{ env `DATABASE_HOST` }}", "DATABASE_PORT={{ env `DATABASE_PORT` }}"
   ]
 
   provisioner "shell" {
