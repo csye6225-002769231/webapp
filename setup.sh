@@ -23,7 +23,7 @@ PGPASSWORD="$DATABASE_PASS" psql -U "$DATABASE_USER" -h "$DATABASE_HOST" -p "$DA
 
 sudo apt install unzip
 
-unzip webapp.zip webapp
+unzip webapp.zip -d webapp
 
 sudo cd webapp
 

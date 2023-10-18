@@ -30,6 +30,13 @@ jobs:
           echo "DIALECT=${{secrets.DIALECT}}" >> .env
           echo "DEFAULTUSERSPATH=${{secrets.DEFAULTUSERSPATH}}" >> .env
 
+      - name: Set up PostgreSQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install postgresql postgresql-client
+          sudo service postgresql start
+          pg_isready    
+
       - name: Create user.csv
         run: |
           touch user.csv
