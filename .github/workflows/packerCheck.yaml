@@ -44,11 +44,11 @@ jobs:
         run: |
           packer validate aws.pkr.hcl
         env:
-          DATABASE: ${{secrets.DATABASE}}
-          DATABASE_PASS: ${{secrets.DATABASE_PASS}} 
-          DATABASE_USER: ${{secrets.DATABASE_USER}}
-          DATABASE_PORT: ${{secrets.DATABASE_PORT}}
-          DATABASE_HOST: ${{secrets.DATABASE_HOST}} 
+          PKR_VAR_database: ${{secrets.DATABASE}}
+          PKR_VAR_database_pass: ${{secrets.DATABASE_PASS}} 
+          PKR_VAR_database_user: ${{secrets.DATABASE_USER}}
+          PKR_VAR_database_port: ${{secrets.DATABASE_PORT}}
+          PKR_VAR_database_host: ${{secrets.DATABASE_HOST}} 
           DIALECT: ${{secrets.DIALECT}} 
           DEFAULTUSERSPATH: ${{secrets.DEFAULTUSERSPATH}} 
           AMI_USER_DEMO: ${{secrets.AMI_USER_DEMO}} 
