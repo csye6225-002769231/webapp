@@ -49,7 +49,7 @@ jobs:
           sudo -u postgres psql -c "ALTER USER ${{secrets.DATABASE_USER}} WITH PASSWORD '${{secrets.DATABASE_PASS}} ';"
           
           # Connect to the 'postgres' database using the specified user and password
-          PGPASSWORD=${{secrets.DATABASE_PASS}}  psql -U ${{secrets.DATABASE_USER}} -h ${{secrets.DATABASE_HOST}}T -p ${{secrets.DATABASE_PORT}}
+          PGPASSWORD=${{secrets.DATABASE_PASS}}  psql -U ${{secrets.DATABASE_USER}} -h '${{secrets.DATABASE_HOST}}' -p ${{secrets.DATABASE_PORT}}
 
       - name: Run Integration Tests
         run: |
