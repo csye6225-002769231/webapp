@@ -52,10 +52,10 @@ jobs:
           DIALECT: ${{secrets.DIALECT}} 
           DEFAULTUSERSPATH: ${{secrets.DEFAULTUSERSPATH}} 
           AMI_USER_DEMO: ${{secrets.AMI_USER_DEMO}} 
-          PKR_VAR_aws-region: ${{secrets.AWS_REGION}} 
-          PKR_VAR_source-ami: ${{secrets.SOURCE_AMI}} 
-          PKR_VAR_ssh-username: ${{secrets.SSH_USERNAME}}
-          PKR_VAR_subnet-id: ${{secrets.SUBNET_ID}}
+          PKR_VAR_aws-region: "${{secrets.AWS_REGION}}"
+          PKR_VAR_source-ami: "${{secrets.SOURCE_AMI}} "
+          PKR_VAR_ssh-username: "${{secrets.SSH_USERNAME}}"
+          PKR_VAR_subnet-id: "${{secrets.SUBNET_ID}}"
 
 
           
