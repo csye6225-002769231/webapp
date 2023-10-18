@@ -31,7 +31,7 @@ jobs:
           echo "DATABASE_PORT=${{secrets.DATABASE_PORT}}" >> .env
           echo "DATABASE_HOST=${{secrets.DATABASE_HOST}}" >> .env
           echo "DIALECT=${{secrets.DIALECT}}" >> .env
-          echo "DEFAULTUSERSPATH=${{secrets.DEFAULTUSERSPATH}}" >> .env
+          echo "DEFAULTUSERSPATH='${{secrets.DEFAULTUSERSPATH}}'" >> .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
