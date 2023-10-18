@@ -18,13 +18,11 @@ sudo apt install unzip
 
 cd /tmp
 
-mkdir assignment5
-
 unzip webapp.zip -d /tmp/assignment5
 
 cd /tmp/assignment5/webapp
 
-npm i
+sudo npm i
 
 
 
