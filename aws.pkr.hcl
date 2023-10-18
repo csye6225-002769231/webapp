@@ -43,10 +43,6 @@ source "amazon-ebs" "csye6225-ami" {
     max_attempts  = 50
   }
 
-  ami_regions = [
-    "${var.aws-region}",
-  ]
-
   ami_users = [
     "{{env `AMI_USER_DEMO`}}",
   ]
