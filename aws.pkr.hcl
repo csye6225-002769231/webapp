@@ -76,7 +76,7 @@ build {
   }
 
   provisioner "shell" {
-    script = "setup.sh",
+    script = "setup.sh"
     # environment_vars = ["DATABASE_USER= "
 
     # ]
