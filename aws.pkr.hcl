@@ -19,17 +19,17 @@ variable "aws-region" {
 
 variable "source-ami" {
   type    = string
-  default = "{{env `SOURCE_AMI`}}"
+  default = "ami-06db4d78cb1d3bbf9"
 }
 
 variable "ssh-username" {
   type    = string
-  default = "{{env `SSH_USERNAME`}}"
+  default = "admin"
 }
 
 variable "subnet-id" {
   type    = string
-  default = "{{env `SUBNET_ID`}}"
+  default = "subnet-0731f505253577b49"
 }
 
 source "amazon-ebs" "csye6225-ami" {
