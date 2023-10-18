@@ -17,6 +17,7 @@ variable "source-ami" {
 
 variable "ssh-username" {
   type = string
+  default = "admin"
 }
 
 variable "subnet-id" {
