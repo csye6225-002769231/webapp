@@ -18,10 +18,5 @@ sudo apt install unzip
 
 cd /tmp
 
-mv user.csv /opt
-
 unzip webapp.zip
 
-cd webapp
-
-npm i
