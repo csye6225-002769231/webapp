@@ -16,7 +16,7 @@ WebApp - CSYE 6225
 
 ## Project Overview
 
-This is a Assignment RestAPI which lets its users to CRUD on Assignments.
+This is a Assignment RESTApi which lets its users to CRUD on Assignments.
 
 ## Prerequisites
 
