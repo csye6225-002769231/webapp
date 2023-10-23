@@ -21,6 +21,11 @@ sudo -u postgres psql -c "ALTER USER $DATABASE_USER WITH PASSWORD '$DATABASE_PAS
           
 PGPASSWORD="$DATABASE_PASS" psql -U "$DATABASE_USER" -h "$DATABASE_HOST" -p "$DATABASE_PORT"
 
+sudo groupadd users-6225
+
+# Giving privileges
+sudo useradd -s /bin/false -g users-6225 -d /home/admin -m kshitij
+
 sudo apt install unzip
 
 unzip webapp.zip -d webapp
@@ -28,6 +33,8 @@ unzip webapp.zip -d webapp
 cd webapp
 
 sudo mv user.csv /opt
+
+sudo mv auto-run.service /lib/systemd/system
 
 sudo npm i
 
