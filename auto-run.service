@@ -5,8 +5,8 @@ ConditionPathExists=/home/admin/webapp
 
 [Service]
 Environment=NODE_PORT=3000
-User=csye6225 
-Group=csye6225 
+User=kshitij 
+Group=users-csye6225 
 ExecStart=/usr/bin/node /home/admin/server.js
 Restart=on-failure
 
