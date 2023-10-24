@@ -15,26 +15,6 @@ variable "source-ami" {
   type = string
 }
 
-variable "database" {
-  type = string
-}
-
-variable "database_user" {
-  type = string
-}
-
-variable "database_host" {
-  type = string
-}
-
-variable "database_pass" {
-  type = string
-}
-
-variable "database_port" {
-  type = string
-}
-
 variable "ssh-username" {
   type    = string
   default = "admin"
