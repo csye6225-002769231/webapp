@@ -4,10 +4,10 @@ After=network.target
 ConditionPathExists=/home/admin/webapp 
 
 [Service]
-Environment= /etc/environment 
+EnvironmentFile= /etc/environment 
 User=kshitij 
 Group=users-csye6225 
-ExecStart=/usr/bin/node $DATABASE_USER $DATABASE_PASS $DATABASE $DATABASE_HOST $DATABASE_PORT $DIALECT $DEFAULTUSERSPATH $NODE_PORT /home/admin/webapp/server.js
+ExecStart=/usr/bin/node /home/admin/webapp/server.js
 Restart=on-failure
 
 [Install]
