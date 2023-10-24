@@ -34,7 +34,7 @@ cd webapp
 
 sudo mv user.csv /opt
 
-sudo mv auto-run.service /lib/systemd/system
+sudo mv auto-run.service /etc/systemd/system
 
 sudo npm i
 
