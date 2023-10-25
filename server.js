@@ -1,5 +1,5 @@
 // importing required packages
-const database = require('./db.js');
+const database = require('./db.js').conn;
 const express = require('express');
 const app = express();
 
@@ -26,17 +26,14 @@ const assignment_controllers = require("./controllers/assignment_controllers.js"
 
 app.all('/healthz', async (req, res) => {
   res.set('Cache-control', 'no-cache');
-
   try {
-
-
     const bodyLength = parseInt(req.get('Content-Length') || '0', 10);
     if (req.method === 'GET') {
       // Checking for body and query lengths
       if (Object.keys(req.query).length > 0 || bodyLength > 0) {
         res.status(400).send(); // Bad request
       } else {
-        const val = await database.conn();
+        const val = await database;
         if (!val) {
           res.status(503).send(); // Not connected
         } else {
