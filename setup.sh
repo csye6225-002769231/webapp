@@ -20,7 +20,7 @@ sudo apt install unzip
 sudo cp webapp.zip /opt/webapp
 cd /opt/webapp
 
-unzip webapp.zip
+sudo unzip webapp.zip
 
 sudo mv user.csv /opt
 
