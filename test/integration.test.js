@@ -1,4 +1,4 @@
-const db = require("../db.js").conn();
+const db = require("../db.js").conn;
 const { describe } = require('mocha')
 const chai = require('chai')
 const chaiHttp = require('chai-http');
@@ -14,7 +14,7 @@ describe("CI Testing for GET/healthz", () => {
   
         const response = await chai.request(app).get("/healthz");
         expect(response).to.have.status(200);
-  
+        db()
       } catch (error) {
         console.error("Test Error:", error);
         dbstatus = false;
