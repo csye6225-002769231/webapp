@@ -26,6 +26,7 @@ const assignment_controllers = require("./controllers/assignment_controllers.js"
 
 app.all('/healthz', async (req, res) => {
   res.set('Cache-control', 'no-cache');
+
   try {
     const bodyLength = parseInt(req.get('Content-Length') || '0', 10);
     if (req.method === 'GET') {
@@ -33,8 +34,8 @@ app.all('/healthz', async (req, res) => {
       if (Object.keys(req.query).length > 0 || bodyLength > 0) {
         res.status(400).send(); // Bad request
       } else {
-        const val = await database.conn();
-        if (!val) {
+        const data = await database.conn();
+        if (!data) {
           res.status(503).send(); // Not connected
         } else {
           res.status(200).send(); // Connected
@@ -77,9 +78,7 @@ app.listen(3000, (err) => {
   }
 });
 
-module.exports = {
-  app
-}
+module.exports = app
 
 
 
