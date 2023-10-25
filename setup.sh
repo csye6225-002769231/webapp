@@ -15,6 +15,10 @@ sudo groupadd users-csye6225
 # Giving privileges
 sudo useradd -s /bin/false -g users-csye6225 -d /opt/webapp -m kshitij
 
+sudo chown -R kshitij:users-csye6225 /opt/webapp
+
+sudo chmod g+x /opt/webapp
+
 sudo apt install unzip
 
 sudo cp webapp.zip /opt/webapp
