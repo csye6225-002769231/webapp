@@ -91,16 +91,16 @@ async function bootstrapDatabase() {
 bootstrapDatabase();
 
 
-// const conn = () => {
-//     return sequelize
-//         .authenticate()
-//         .then(async () => {
-//             return true;
-//         })
-//         .catch(() => {
-//             return false;
-//         });
-//     }
+const conn = () => {
+    return sequelize
+        .authenticate()
+        .then(async () => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        });
+    }
 // sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
 //     port: process.env.DATABASE_PORT,
 //     logging: false,
@@ -113,5 +113,6 @@ bootstrapDatabase();
 module.exports = {
     sequelize: sequelize,
     bootstrapDatabase: bootstrapDatabase,
+    conn: conn,
 }
 
