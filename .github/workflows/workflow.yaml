@@ -12,55 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set .env file
-        run: |
-          touch .env
-          echo DATABASE_USER="${{secrets.DATABASE_USER}}" >> .env
-          echo DATABASE_PASS="${{secrets.DATABASE_PASS}}" >> .env
-          echo DATABASE="${{secrets.DATABASE}}" >> .env
-          echo DATABASE_HOST="${{secrets.DATABASE_HOST}}" >> .env
-          echo DATABASE_PORT="${{secrets.DATABASE_PORT}}" >> .env
-          echo DIALECT="${{secrets.DIALECT}}" >> .env
-          echo DEFAULTUSERSPATH="" >> .env
-
-
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18.x
-          cache: 'npm'
-
-      - name: Set up PostgreSQL
-        run: |
-
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Create PG user and connect
-        run: |
-          # Load environment variables from .env file
-          source .env
-          
-          # Change the user's password using superuser privileges
-          sudo -u postgres psql -c "ALTER USER $DATABASE_USER WITH PASSWORD '$DATABASE_PASS';"
-          
-          # Connect to the 'postgres' database using the specified user and password
-          PGPASSWORD=$DATABASE_PASS psql -U $DATABASE_USER -h $DATABASE_HOST -p $DATABASE_PORT
-
-      - name: Run Integration Tests
-        run: |
-          # Run integration tests using environment variables
-          npm run test
-
-jobs:
-  Run-Integration-test-for-healthz:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up MariaDB
+      - name: Set up postgres
         run: |
 
           source .env
@@ -93,4 +45,4 @@ jobs:
         run: |
             ls -A
             npm i -force
-            npm test
+            npm run test
