@@ -1,5 +1,5 @@
 // importing required packages
-const database = require('./db.js').conn;
+const database = require('./db.js');
 const express = require('express');
 const app = express();
 
@@ -33,7 +33,7 @@ app.all('/healthz', async (req, res) => {
       if (Object.keys(req.query).length > 0 || bodyLength > 0) {
         res.status(400).send(); // Bad request
       } else {
-        const val = await database;
+        const val = await database.conn();
         if (!val) {
           res.status(503).send(); // Not connected
         } else {
