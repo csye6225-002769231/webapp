@@ -34,6 +34,7 @@ async function bootstrapDatabase() {
         } else {
             console.log(`${process.env.DATABASE} database already exists.`);
         }
+        
         await sequelize.sync();
         
         console.log('Database synchronization complete.');

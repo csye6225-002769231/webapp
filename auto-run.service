@@ -8,7 +8,7 @@ EnvironmentFile= /etc/environment
 User=kshitij 
 Group=users-csye6225 
 ExecStart=/usr/bin/node /opt/webapp/server.js
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
