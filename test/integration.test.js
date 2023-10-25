@@ -1,4 +1,4 @@
-const db = require("../db.js").bootstrapDatabase();
+const db = require("../db.js").conn();
 const { describe } = require('mocha')
 const chai = require('chai')
 const chaiHttp = require('chai-http');
