@@ -17,7 +17,7 @@ jobs:
           touch .env
           echo DATABASE_USER="${{secrets.DATABASE_USER}}" >> .env
           echo DATABASE_PASS="${{secrets.DATABASE_PASS}}" >> .env
-          echo DATABASE="${{secrets.DATABASE}}" >> .env
+          echo DATABASE="csye6225" >> .env
           echo DATABASE_HOST="${{secrets.DATABASE_HOST}}" >> .env
           echo DATABASE_PORT="${{secrets.DATABASE_PORT}}" >> .env
           echo DIALECT="${{secrets.DIALECT}}" >> .env
