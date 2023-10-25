@@ -17,9 +17,10 @@ sudo useradd -s /bin/false -g users-csye6225 -d /opt/webapp -m kshitij
 
 sudo apt install unzip
 
-unzip webapp.zip /opt/webapp
-
+sudo cp webapp.zip /opt/webapp
 cd /opt/webapp
+
+unzip webapp.zip
 
 sudo mv user.csv /opt
 
