@@ -94,7 +94,7 @@ bootstrapDatabase();
 const conn = () => {
     return sequelize
         .authenticate()
-        .then(() => {
+        .then(async () => {
             return true;
         })
         .catch(() => {
