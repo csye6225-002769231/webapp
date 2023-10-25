@@ -10,7 +10,7 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER,
     port: process.env.DATABASE_PORT,
     logging: false,
     host: process.env.DATABASE_HOST,
-    dialect: process.env.DIALECT
+    dialect: 'postgres'
 });
 
 const pool = new Pool({
@@ -34,8 +34,8 @@ async function bootstrapDatabase() {
         } else {
             console.log(`${process.env.DATABASE} database already exists.`);
         }
-
         await sequelize.sync();
+        
         console.log('Database synchronization complete.');
         const path = process.env.DEFAULTUSERSPATH;
         const account = require("./model/account.js").account;
@@ -75,7 +75,9 @@ async function bootstrapDatabase() {
         
         
         importDataFromCSV();
+        
     } catch (error) {
+
         console.error('Error while bootstrapping the database:', error);
     }
 
@@ -87,12 +89,7 @@ async function bootstrapDatabase() {
 
 // }
 bootstrapDatabase();
-// sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
-//     port: process.env.DATABASE_PORT,
-//     logging: false,
-//     host: process.env.DATABASE_HOST,
-//     dialect: process.env.DIALECT
-// });
+
 
 const conn = () => {
     return sequelize
@@ -104,10 +101,18 @@ const conn = () => {
             return false;
         });
     }
+// sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
+//     port: process.env.DATABASE_PORT,
+//     logging: false,
+//     host: process.env.DATABASE_HOST,
+//     dialect: process.env.DIALECT
+// });
+
+
 
 module.exports = {
     sequelize: sequelize,
     bootstrapDatabase: bootstrapDatabase,
-    conn:conn,
+    conn: conn,
 }
 
