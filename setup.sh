@@ -18,9 +18,12 @@ sudo useradd -s /bin/false -g users-csye6225 -d /opt/webapp -m kshitij
 sudo apt install unzip
 
 sudo cp webapp.zip /opt/webapp
+
 cd /opt/webapp
 
 sudo unzip webapp.zip
+
+sudo npm i
 
 sudo mv user.csv /opt
 
@@ -32,7 +35,6 @@ sudo systemctl enable auto-run
 
 sudo systemctl start auto-run
 
-sudo npm i
 
 
 
