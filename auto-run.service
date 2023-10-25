@@ -1,13 +1,13 @@
 [Unit]
 Description=Webapp Start
 After=network.target
-ConditionPathExists=/home/admin/webapp 
+ConditionPathExists=/opt/webapp 
 
 [Service]
 EnvironmentFile= /etc/environment 
 User=kshitij 
 Group=users-csye6225 
-ExecStart=/usr/bin/node /home/admin/webapp/server.js
+ExecStart=/usr/bin/node /opt/webapp/server.js
 Restart=on-failure
 
 [Install]
