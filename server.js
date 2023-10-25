@@ -20,7 +20,7 @@ app.all('/healthz', async (req, res) => {
       if (Object.keys(req.query).length > 0 || bodyLength > 0) {
         res.status(400).send(); // Bad request
       } else {
-        const data = await database.bootstrapDatabase ;
+        const data = await database.conn() ;
         if (!data) {
           res.status(503).send(); // Not connected
         } else {

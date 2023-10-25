@@ -1,4 +1,4 @@
-const server = require("../db.js").bootstrapDatabase;
+const server = require("../db.js");
 const { describe } = require("mocha");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
@@ -11,7 +11,6 @@ chai.use(chaiHttp);
 describe("CI Testing for GET/healthz", () => {
   it("Successfully check the Db connection", async () => {
     let dbstatus = true;
-    server()
     try {
       const response = await chai.request(app).get("/healthz");
       expect(response).to.have.status(200);
