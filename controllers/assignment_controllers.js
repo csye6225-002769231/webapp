@@ -10,6 +10,7 @@ const createAssignment = async (req, res) => {
     const { name, points, num_of_attempts, deadline } = req.body;
     const accountId = req.account.id;
     const bodyLength = parseInt(req.get('Content-Length') || '0', 10)
+    const deadlineDate = new Date(deadline);
 
     try {
         if (bodyLength == 0) {
@@ -23,6 +24,11 @@ const createAssignment = async (req, res) => {
             return res.status(400).send();
         }
         if (!Number.isInteger(points) || !Number.isInteger(num_of_attempts)) {
+            return res.status(400).send();
+        }
+
+        const deadlineRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+        if (!deadline.match(deadlineRegex)) {
             return res.status(400).send();
         }
         const assignment = await Assignment.create({
@@ -128,6 +134,12 @@ const updateAssignment = async (req, res) => {
         if (Object.keys(req.body).every(key => ['name', 'points', 'num_of_attempts', 'deadline'].includes(key)) === false) {
             return res.status(400).send();
         }
+
+        const deadlineRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+        if (!deadline.match(deadlineRegex)) {
+            return res.status(400).send();
+        }
+        
         const assignment = await Assignment.findByPk(id);
         if (assignment == null) {
             res.status(404).send()
