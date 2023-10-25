@@ -8,20 +8,6 @@ const app = express();
 const basicAuth = require("./middleware/auth.js");
 const assignment_controllers = require("./controllers/assignment_controllers.js")
 
-// csv.importData()
-//   .then(() => {
-//     console.log('CSV data import completed.');
-//   })
-//   .catch((error) => {
-//     console.error('Error importing CSV data:', error);
-//   });
-
-// app.get('/v1/assignments'), async(req, res) =>{
-//    const val = await database.bootstrapDatabase()
-//    res.status(200).send()
-
-// }
-
 
 
 app.all('/healthz', async (req, res) => {
