@@ -98,9 +98,11 @@ const conn = () => {
     return sequelize
         .authenticate()
         .then(() => {
+            console.log('Connection has been established successfully. Returning true.');
             return true;
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log('Unable to connect to the database:', err);
             return false;
         });
     }

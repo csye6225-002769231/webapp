@@ -29,7 +29,7 @@ app.all('/healthz', async (req, res) => {
  
    try {
      // Attempt to connect to the database asynchronously
-     const val = await database.conn;
+     const val = await database.conn();
      
      const bodyLength = parseInt(req.get('Content-Length') || '0', 10);
  
@@ -40,8 +40,10 @@ app.all('/healthz', async (req, res) => {
          res.status(400).send(); // Bad request
        } else {
          if (!val) {
+          console.log('Database connection failed: Val is false');
            res.status(503).send(); // Not connected
          } else {
+          console.log('Database connection passed: Val is true');
            res.status(200).send(); // Connected
          }
        }
@@ -50,7 +52,7 @@ app.all('/healthz', async (req, res) => {
      }
    } catch (error) {
      // Handle the database connection error here
-     console.error('Database connection error:', error);
+     console.error('Database connection error in healthz:', error);
      res.status(503).send(); // Database connection error
    }
  });
