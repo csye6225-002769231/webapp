@@ -37,62 +37,15 @@ async function bootstrapDatabase() {
 
         await sequelize.sync();
         console.log('Database synchronization complete.');
-        const path = process.env.DEFAULTUSERSPATH;
-        const account = require("./model/account.js").account;
-        async function importDataFromCSV() {
-            try {
-                if(path === ""){
-                    console.log("Default users file not found", path)
-                    return
-                }else{
-                    console.log("Reading default users from file: ", path)
-                }
-        
-                fastcsv
-                    .parseStream(fs.createReadStream(path), { headers: true })
-                    .on('data', async (data) => {
-                        const { first_name, last_name, email, password } = data;
-        
-                        const existemail = await account.findOne({
-                            where: { email: email}
-                        })
-                        if(existemail == null){
-                            await account.create({
-                                first_name,
-                                last_name,
-                                email,
-                                password,
-                            })
-                        }
-                    })
-                    .on('end', () => {
-                        console.log('CSV data import completed.');
-                    });
-            } catch (error) {
-                console.error('Error importing CSV data:', error);
-            }
-        }
-        
-        
-        importDataFromCSV();
+        const csv = require('./csvparser.js');
+
     } catch (error) {
         console.error('Error while bootstrapping the database:', error);
     }
 
     
 }
-
-
-
-
-// }
 bootstrapDatabase();
-// sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
-//     port: process.env.DATABASE_PORT,
-//     logging: false,
-//     host: process.env.DATABASE_HOST,
-//     dialect: process.env.DIALECT
-// });
 
 const conn = () => {
     return sequelize
