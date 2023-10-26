@@ -3,47 +3,26 @@ const database = require('./db.js');
 const express = require('express');
 const app = express();
 
-
-// const csv = require('./csvparser.js');
 const basicAuth = require("./middleware/auth.js");
 const assignment_controllers=require("./controllers/assignment_controllers.js")
-
-// csv.importData()
-//   .then(() => {
-//     console.log('CSV data import completed.');
-//   })
-//   .catch((error) => {
-//     console.error('Error importing CSV data:', error);
-//   });
-
-// app.get('/v1/assignments'), async(req, res) =>{
-//    const val = await database.bootstrapDatabase()
-//    res.status(200).send()
-
-// }
-
-
 
 app.all('/healthz', async (req, res) => {
    res.set('Cache-control', 'no-cache');
  
    try {
-     // Attempt to connect to the database asynchronously
      const val = await database.conn();
      
      const bodyLength = parseInt(req.get('Content-Length') || '0', 10);
- 
-     // This will run only if the request is GET
+
      if (req.method === 'GET') {
        // Checking for body and query lengths
        if (Object.keys(req.query).length > 0 || bodyLength > 0) {
          res.status(400).send(); // Bad request
        } else {
          if (!val) {
-          console.log('Database connection failed: Val is false');
            res.status(503).send(); // Not connected
          } else {
-          console.log('Database connection passed: Val is true');
+
            res.status(200).send(); // Connected
          }
        }

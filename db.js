@@ -82,27 +82,16 @@ async function bootstrapDatabase() {
     
 }
 
-
-
-
-// }
 bootstrapDatabase();
-// sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
-//     port: process.env.DATABASE_PORT,
-//     logging: false,
-//     host: process.env.DATABASE_HOST,
-//     dialect: process.env.DIALECT
-// });
+
 
 const conn = () => {
     return pool
         .connect()
         .then(() => {
-            console.log('Connection has been established successfully. Returning true.');
             return true;
         })
         .catch((err) => {
-            console.log('Unable to connect to the database:', err);
             return false;
         });
     }
