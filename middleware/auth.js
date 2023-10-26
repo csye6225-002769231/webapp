@@ -39,7 +39,7 @@ const basicAuth = async (req, res, next) => {
       next();
     } catch (err) {
       console.error('Error:', err);
-      return res.status(401).send('Unauthorized');
+      return res.status(401).send('Database connection error');
     }
   };
 
