@@ -95,8 +95,8 @@ bootstrapDatabase();
 // });
 
 const conn = () => {
-    return sequelize
-        .authenticate()
+    return pool
+        .connect()
         .then(() => {
             console.log('Connection has been established successfully. Returning true.');
             return true;
