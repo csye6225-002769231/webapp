@@ -34,9 +34,8 @@ async function bootstrapDatabase() {
         } else {
             console.log(`${process.env.DATABASE} database already exists.`);
         }
-        
+
         await sequelize.sync();
-        
         console.log('Database synchronization complete.');
         const path = process.env.DEFAULTUSERSPATH;
         const account = require("./model/account.js").account;
@@ -76,9 +75,7 @@ async function bootstrapDatabase() {
         
         
         importDataFromCSV();
-        
     } catch (error) {
-
         console.error('Error while bootstrapping the database:', error);
     }
 
@@ -90,18 +87,6 @@ async function bootstrapDatabase() {
 
 // }
 bootstrapDatabase();
-
-
-const conn = () => {
-    return sequelize
-        .authenticate()
-        .then(async () => {
-            return true;
-        })
-        .catch(() => {
-            return false;
-        });
-    }
 // sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
 //     port: process.env.DATABASE_PORT,
 //     logging: false,
@@ -109,11 +94,19 @@ const conn = () => {
 //     dialect: process.env.DIALECT
 // });
 
-
+const conn = () => {
+    return sequelize
+        .authenticate()
+        .then(() => {
+            return true;
+        })
+        .catch(() => {
+            return false;
+        });
+    }
 
 module.exports = {
     sequelize: sequelize,
     bootstrapDatabase: bootstrapDatabase,
-    conn: conn,
+    conn:conn,
 }
-
