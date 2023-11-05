@@ -10,6 +10,8 @@ Group=users-csye6225
 ExecStart=/usr/bin/node /opt/webapp/server.js
 Restart=always
 RestartSec=3
+StandardOutput=append:/var/log/webapp.log
+StandardError=append:/var/log/webapp_error.log
 
 [Install]
 WantedBy=multi-user.target

@@ -1,89 +1,137 @@
-
 const Sequelize = require('sequelize');
-const {Pool} = require('pg');
+const { Pool } = require('pg');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 const fs = require('fs');
 const fastcsv = require('fast-csv');
+const pino = require('pino');
+const path = require('path');
+
+const logger = pino({
+  level: 'info',
+  time: true,
+  formatters: {
+    level: (label) => {
+      return { level: label.toUpperCase() };
+    },
+  },
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true, 
+    },
+  },
+});
+
+function getStackInfo() {
+  const stacklist = new Error().stack.split('\n').slice(3);
+
+  for (let stack of stacklist) {
+    if (stack.includes('node_modules') || stack.includes('internal')) continue; 
+    const stackInfo = /at (.+) \((.+):(\d+):(\d+)\)$/.exec(stack) || /at (.+):(\d+):(\d+)$/.exec(stack);
+    if (stackInfo) {
+      let method, filePath, line, column;
+      if (stackInfo.length === 5) {
+        [, method, filePath, line, column] = stackInfo;
+      } else {
+        [, filePath, line, column] = stackInfo;
+        method = filePath.split('/').pop();
+      }
+      filePath = path.relative(process.cwd(), filePath); 
+      return { method, filePath, line, column };
+    }
+  }
+  return {};
+}
+
+function customLogger(logger, level, message, error,method) {
+  const {filePath, line, column } = getStackInfo();
+  const logObject = {
+    level: level.toString(),
+    message,
+    method,
+    filePath: __filename,
+    line: parseInt(line), 
+    time: new Date().toISOString(),
+  };
+  if (error) logObject.error = error.stack || error.toString();
+
+  logger[level](logObject);
+}
 
 const sequelize = new Sequelize(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASS, {
     port: process.env.DATABASE_PORT,
     logging: false,
     host: process.env.DATABASE_HOST,
-    dialect: process.env.DIALECT
+    dialect: process.env.DIALECT,
 });
 
 const pool = new Pool({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
-    port: process.env.DATABASE_PORT
-})
+    port: process.env.DATABASE_PORT,
+});
 
 async function bootstrapDatabase() {
-
-    // const assignment = require("./model/assignment.js").assignment;
-    // const foreignKey = require('./foreignKey.js');
     try {
         await pool.connect();
         const res = await pool.query(`SELECT datname FROM pg_catalog.pg_database WHERE datname = '${process.env.DATABASE}'`);
 
         if (res.rows.length === 0) {
             await pool.query(`CREATE DATABASE "${process.env.DATABASE}";`);
-            console.log(`Created database ${process.env.DATABASE}.`);
+            logger.info(`Created database ${process.env.DATABASE}.`);
         } else {
-            console.log(`${process.env.DATABASE} database already exists.`);
+            logger.info(`${process.env.DATABASE} database already exists.`);
         }
 
         await sequelize.sync();
-        console.log('Database synchronization complete.');
+        logger.info('Database synchronization complete.');
         const path = process.env.DEFAULTUSERSPATH;
-        const account = require("./model/account.js").account;
+        const account = require('./model/account.js').account;
+
         async function importDataFromCSV() {
             try {
-                if(path === ""){
-                    console.log("Default users file not found", path)
-                    return
-                }else{
-                    console.log("Reading default users from file: ", path)
+                if (path === "") {
+                    logger.warn("Default users file not found", path);
+                    return;
+                } else {
+                    logger.info("Reading default users from file: ", path);
                 }
-        
+
                 fastcsv
                     .parseStream(fs.createReadStream(path), { headers: true })
                     .on('data', async (data) => {
                         const { first_name, last_name, email, password } = data;
-        
+
                         const existemail = await account.findOne({
-                            where: { email: email}
-                        })
-                        if(existemail == null){
+                            where: { email: email },
+                        });
+
+                        if (existemail == null) {
                             await account.create({
                                 first_name,
                                 last_name,
                                 email,
                                 password,
-                            })
+                            });
                         }
                     })
                     .on('end', () => {
-                        console.log('CSV data import completed.');
+                        logger.info('CSV data import completed.');
                     });
             } catch (error) {
-                console.error('Error importing CSV data:', error);
+                customLogger(logger, 'error', 'Error CSV Parsing', error)
             }
         }
-        
-        
+
         importDataFromCSV();
     } catch (error) {
-        console.error('Error while bootstrapping the database:', error);
+        customLogger(logger, 'error', 'Error Bootstrapping Database', error)
     }
-
-    
 }
 
 bootstrapDatabase();
-
 
 const conn = () => {
     return pool
@@ -94,10 +142,10 @@ const conn = () => {
         .catch((err) => {
             return false;
         });
-    }
+};
 
 module.exports = {
     sequelize: sequelize,
     bootstrapDatabase: bootstrapDatabase,
-    conn:conn,
-}
+    conn: conn,
+};

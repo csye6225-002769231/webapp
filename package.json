@@ -25,6 +25,9 @@
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
+    "pino": "^8.16.1",
+    "pino-colada": "^2.2.2",
+    "pino-pretty": "^10.2.3",
     "sequelize": "^6.33.0",
     "top-level-await": "^1.1.0"
   }
