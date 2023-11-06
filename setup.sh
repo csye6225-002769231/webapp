@@ -23,6 +23,10 @@ sudo apt install unzip
 
 sudo cp webapp.zip /opt/webapp
 
+wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
+
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+
 cd /opt/webapp
 
 sudo unzip webapp.zip
@@ -32,10 +36,6 @@ sudo npm i
 sudo mv user.csv /opt
 
 sudo mv auto-run.service /etc/systemd/system
-
-wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
-
-sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
 
 sudo systemctl daemon-reload
 
