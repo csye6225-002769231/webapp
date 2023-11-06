@@ -33,6 +33,10 @@ sudo mv user.csv /opt
 
 sudo mv auto-run.service /etc/systemd/system
 
+wget https://amazoncloudwatch-agent.s3.amazonaws.com/debian/amd64/latest/amazon-cloudwatch-agent.deb
+
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+
 sudo systemctl daemon-reload
 
 sudo systemctl enable auto-run

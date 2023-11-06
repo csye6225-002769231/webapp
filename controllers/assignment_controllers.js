@@ -9,16 +9,11 @@ const fs = require('fs');
 
 const logger = pino({
     level: 'info',
-    time: true,
+    base: null,
+    timestamp: pino.stdTimeFunctions.isoTime,
     formatters: {
       level: (label) => {
         return { level: label.toUpperCase() };
-      },
-    },
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
       },
     },
   });
@@ -48,19 +43,19 @@ function getStackInfo() {
 }
 
 function customLogger(logger, level, message, error,method) {
-  const {filePath, line, column } = getStackInfo();
-  const logObject = {
-    level: level.toString(),
-    message,
-    method,
-    filePath: __filename,
-    line: parseInt(line), 
-    time: new Date().toISOString(),
-  };
-  if (error) logObject.error = error.stack || error.toString();
-
-  logger[level](logObject);
-}
+    const {filePath, line, column } = getStackInfo();
+    const logObject = {
+      message,
+      method,
+      filePath: __filename,
+      line: parseInt(line), 
+    };
+    if (error) logObject.error = error.stack || error.toString();
+  
+    logger[level](logObject);
+  }
+  
+  
 // Create a new assignment
 const createAssignment = async (req, res) => {
 
