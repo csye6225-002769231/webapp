@@ -282,6 +282,7 @@ module.exports = {
     getAllAssignments: getAllAssignments,
     getAssignmentById: getAssignmentById,
     updateAssignment: updateAssignment,
-    deleteAssignment: deleteAssignment
+    deleteAssignment: deleteAssignment,
+    stats:stats
 
 }
