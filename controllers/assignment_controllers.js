@@ -7,6 +7,9 @@ const pino = require('pino');
 const path = require('path');
 const fs = require('fs');
 
+const StatsD = require('node-statsd');
+const stats = new StatsD({host:'localhost' ,port: 8125});
+
 const logger = pino({
     level: 'info',
     base: null,
@@ -58,7 +61,7 @@ function customLogger(logger, level, message, error,method) {
   
 // Create a new assignment
 const createAssignment = async (req, res) => {
-
+    stats.increment(`api.assignments.post.calls`)
     const { name, points, num_of_attempts, deadline } = req.body;
     const accountId = req.account.id;
     const bodyLength = parseInt(req.get('Content-Length') || '0', 10)
@@ -126,7 +129,7 @@ const createAssignment = async (req, res) => {
 };
 
 const getAllAssignments = async (req, res) => {
-
+    stats.increment(`api.assignments.getall.calls`)
     try {
         const assignments = await Assignment.findAll({
             attributes: {
@@ -153,6 +156,7 @@ const getAllAssignments = async (req, res) => {
 
 const getAssignmentById = async (req, res) => {
     // await sequelize.query(`USE \`${process.env.DATABASE}\``);
+    stats.increment(`api.assignments.getbyId.calls`)
     const { id } = req.params;
     try {
         const bodyLength = parseInt(req.get('Content-Length') || '0', 10)
@@ -181,6 +185,7 @@ const getAssignmentById = async (req, res) => {
 };
 
 const updateAssignment = async (req, res) => {
+    stats.increment(`api.assignments.put.calls`)
     const { name, points, num_of_attempts, deadline } = req.body;
     const { id } = req.params;
     const accountId = req.account.id;
@@ -242,6 +247,7 @@ const updateAssignment = async (req, res) => {
 };
 
 const deleteAssignment = async (req, res) => {
+    stats.increment(`api.assignments.delete.calls`)
     const { id } = req.params;
     const accountId = req.account.id;
     try {

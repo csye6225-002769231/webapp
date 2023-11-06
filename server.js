@@ -57,6 +57,7 @@ const assignment_controllers = require("./controllers/assignment_controllers.js"
 
 
 app.all('/healthz', async (req, res) => {
+  assignment_controllers.stats.increment(`api.healthz.calls`)
   res.set('Cache-control', 'no-cache');
 
   try {
