@@ -57,7 +57,6 @@ const assignment_controllers = require("./controllers/assignment_controllers.js"
 
 
 app.all('/healthz', async (req, res) => {
-  assignment_controllers.stats.increment(`api.healthz.calls`)
   res.set('Cache-control', 'no-cache');
 
   try {
@@ -75,6 +74,7 @@ app.all('/healthz', async (req, res) => {
           customLogger(logger, 'error', 'DataBase Error', null, req.method)
           res.status(503).send(); // Not connected
         } else {
+          assignment_controllers.stats.increment(`api.healthz.calls`)
           logger.info('Database Health Check Successful')
           res.status(200).send(); // Connected
         }
