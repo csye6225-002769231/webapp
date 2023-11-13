@@ -3,7 +3,7 @@
 WebApp - CSYE 6225
 
 ## Table of Contents
-test
+
 - [Project Name](#project-name)
   - [Table of Contents](#table-of-contents)
   - [Project Overview](#project-overview)
