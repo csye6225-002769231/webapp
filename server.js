@@ -77,6 +77,7 @@ app.all('/healthz', async (req, res) => {
         } else {
           
           logger.info('Database Health Check Successful')
+          await val.release();
           res.status(200).send(); // Connected
         }
       }

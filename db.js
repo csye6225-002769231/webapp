@@ -128,13 +128,14 @@ async function bootstrapDatabase() {
 bootstrapDatabase();
 
 const conn = () => {
+
     return pool
         .connect()
-        .then(() => {
-            return true;
+        .then((client) => {
+            return client;
         })
         .catch((err) => {
-            return false;
+            return null;
         });
 };
 
