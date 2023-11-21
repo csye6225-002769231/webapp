@@ -5,7 +5,8 @@ const { DataTypes } = require('sequelize');
 
 const sequelize = require('../db.js').sequelize;
 
-
+const assignment = require('./assignment.js').assignment;
+const submission = require('./submission.js').submission;
 const account = sequelize.define('account', {
     id: {
         type: DataTypes.UUID,
@@ -47,6 +48,8 @@ account.beforeCreate(async (account) => {
 });
 
 
+ account.hasMany(assignment)
+account.hasMany(submission)
 
 module.exports = {
     account: account

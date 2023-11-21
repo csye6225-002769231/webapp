@@ -1,9 +1,10 @@
 [Unit]
 Description=Webapp Start
-After=network.target
+After=cloud-final.service
 ConditionPathExists=/opt/webapp 
 
 [Service]
+Type=simple 
 EnvironmentFile= /etc/environment 
 User=kshitij 
 Group=users-csye6225 
@@ -14,4 +15,4 @@ StandardOutput=append:/var/log/webapp.log
 StandardError=append:/var/log/webapp_error.log
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=cloud-init.target

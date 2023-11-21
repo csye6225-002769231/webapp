@@ -54,6 +54,7 @@ function customLogger(logger, level, message, error,method) {
 
 const basicAuth = require("./middleware/auth.js");
 const assignment_controllers = require("./controllers/assignment_controllers.js")
+const submission_controllers = require("./controllers/submission_controllers.js")
 
 
 app.all('/healthz', async (req, res) => {
@@ -93,12 +94,13 @@ app.all('/healthz', async (req, res) => {
 });
 
 app.use(express.json())
-
+app.post('/v1/assignments/:id/submission', basicAuth.basicAuth, submission_controllers.createSubmission);
 app.post('/v1/assignments', basicAuth.basicAuth, assignment_controllers.createAssignment);
-app.post('/v1/assignments/*', (req, res) => {
-  customLogger(logger, 'error', 'Cannot Post by ID', null, req.method)
-  res.status(404).send();
-});
+
+// app.post('/v1/assignments/*', (req, res) => {
+//   customLogger(logger, 'error', 'Cannot Post by ID', null, req.method)
+//   res.status(404).send();
+// });
 app.get('/v1/assignments', basicAuth.basicAuth, assignment_controllers.getAllAssignments);
 app.get('/v1/assignments/:id', basicAuth.basicAuth, assignment_controllers.getAssignmentById);
 app.put('/v1/assignments/:id', basicAuth.basicAuth, assignment_controllers.updateAssignment);
