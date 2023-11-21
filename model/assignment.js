@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 
 
 const sequelize = require('../db.js').sequelize;
-const account = require('./account.js').account;
 
+const submission = require('./submission.js').submission;
 const assignment = sequelize.define("assignment", {
     id: {
         type: DataTypes.UUID,
@@ -40,11 +40,11 @@ const assignment = sequelize.define("assignment", {
         timestamps: true,
         createdAt: 'assignment_created',
         updatedAt: 'assignment_updated',
-        underscore: true,
+        underscore: true
     });
-    
-    assignment.belongsTo(account)
 
+
+    assignment.hasMany(submission)
 
 module.exports = {
     assignment: assignment

@@ -84,6 +84,7 @@ async function bootstrapDatabase() {
         const path = process.env.DEFAULTUSERSPATH;
         const account = require('./model/account.js').account;
 
+
         async function importDataFromCSV() {
             try {
                 if (path === "") {
