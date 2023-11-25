@@ -117,11 +117,15 @@ const createSubmission = async (req, res) => {
                     submission_date: submission.submission_date,
                     assignment_updated: assignment.assignment_updated   
                 };
-                res.status(201).send(reqSubmission);
+
                 const snsreq = {
                     email: userEmail,
-                    submission_url: reqSubmission.submission_url
+                    submission_url: reqSubmission.submission_url,
+                    fname: req.account.first_name,
+                    assignmentName: assignment.name,
+                    submissionDate: submission.submission_date
                 }
+                res.status(201).send(reqSubmission);
                 AWS.config.update({
                     accessKeyId: process.env.ACCESSKEY,
                     secretAccessKey: process.env.SECRETACCESSKEY,
