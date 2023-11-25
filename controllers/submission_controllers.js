@@ -3,6 +3,7 @@ const Submission = require('../model/submission.js').submission;
 const pino = require('pino');
 const path = require('path');
 const fs = require('fs');
+const AWS = require('aws-sdk');
 
 const StatsD = require('node-statsd');
 const stats = new StatsD({ host: 'localhost', port: 8125 });
@@ -59,6 +60,7 @@ const createSubmission = async (req, res) => {
     const { submission_url } = req.body;
     const assignmentId = req.params.id;
     const accountId = req.account.id;
+    const userEmail = req.account.email;
     try {
 
         const bodyLength = parseInt(req.get('Content-Length') || '0', 10)
@@ -113,10 +115,34 @@ const createSubmission = async (req, res) => {
                     assignment_id: assignment.id,
                     submission_url: submission.submission_url,
                     submission_date: submission.submission_date,
-                    assignment_updated: assignment.assignment_updated
-                    // Add other properties as needed
+                    assignment_updated: assignment.assignment_updated   
                 };
                 res.status(201).send(reqSubmission);
+                const snsreq = {
+                    email: userEmail,
+                    submission_url: reqSubmission.submission_url
+                }
+                AWS.config.update({
+                    accessKeyId: process.env.ACCESSKEY,
+                    secretAccessKey: process.env.SECRETACCESSKEY,
+                    region: 'us-east-1'
+                  });
+                const sns = new AWS.SNS();
+                const sendSubmissionNotification = async (submissionDetails) => {
+                    const params = {
+                      Message: JSON.stringify(snsreq),
+                      TopicArn: process.env.TopicArn
+                    };
+                    try {
+                      await sns.publish(params).promise();
+                      console.log('Submission notification sent');
+                    } catch (error) {
+                      console.error('Error sending submission notification:', error);
+                    }
+                  };
+                  sendSubmissionNotification(reqSubmission).then(() => {
+                    logger.info('Submission notification sent via SNS');
+                  });
             }
         }
 
