@@ -123,7 +123,8 @@ const createSubmission = async (req, res) => {
                     submission_url: reqSubmission.submission_url,
                     fname: req.account.first_name,
                     assignmentName: assignment.name,
-                    submissionDate: submission.submission_updated
+                    submissionDate: submission.submission_updated,
+                    submissionid: submission.submission_id
                 }
                 res.status(201).send(reqSubmission);
                 AWS.config.update({
