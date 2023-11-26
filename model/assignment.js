@@ -44,7 +44,10 @@ const assignment = sequelize.define("assignment", {
     });
 
 
-    assignment.hasMany(submission)
+    assignment.hasMany(submission,{
+        onDelete: 'CASCADE',
+        hooks: true
+    })
 
 module.exports = {
     assignment: assignment

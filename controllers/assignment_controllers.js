@@ -266,6 +266,7 @@ const deleteAssignment = async (req, res) => {
                     res.status(403).send();
                 } else {
                     await assignment.destroy();
+                    logger.info('Assignment Deleted')
                     res.status(204).send()
                 }
 
