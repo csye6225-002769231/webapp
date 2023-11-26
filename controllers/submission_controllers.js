@@ -128,8 +128,6 @@ const createSubmission = async (req, res) => {
                 }
                 res.status(201).send(reqSubmission);
                 AWS.config.update({
-                    accessKeyId: process.env.ACCESSKEY,
-                    secretAccessKey: process.env.SECRETACCESSKEY,
                     region: 'us-east-1'
                   });
                 const sns = new AWS.SNS();
