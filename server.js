@@ -95,6 +95,14 @@ app.all('/healthz', async (req, res) => {
 
 app.use(express.json())
 app.post('/v1/assignments/:id/submission', basicAuth.basicAuth, submission_controllers.createSubmission);
+
+app.all('/v1/assignments/:id/submission', (req, res) => {
+  if (req.method !== 'POST') {
+    customLogger(logger, 'error', 'Method Not Allowed', null, req.method);
+    res.status(405).send(); // Method not allowed
+  }
+});
+
 app.post('/v1/assignments', basicAuth.basicAuth, assignment_controllers.createAssignment);
 
 // app.post('/v1/assignments/*', (req, res) => {
@@ -112,13 +120,11 @@ app.all('/*', (req, res) => {
     res.status(405).send();
   } else {
     customLogger(logger, 'error', 'Link not Found', null, req.method)
-    res.status(404).send(); // Not found or wrong link
+    res.status(404).send();
   }
 });
 
 
-
-// ... (remaining code)
 
 app.listen(3000, (err) => {
   if (err) throw err;

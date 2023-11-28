@@ -139,7 +139,7 @@ const createSubmission = async (req, res) => {
                     };
                     try {
                       await sns.publish(params).promise();
-                      console.log('Submission notification sent');
+                      logger.info('Submission notification sent');
                     } catch (error) {
                       console.error('Error sending submission notification:', error);
                     }
