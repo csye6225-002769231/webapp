@@ -57,6 +57,7 @@ function customLogger(logger, level, message, error, method) {
 }
 
 const createSubmission = async (req, res) => {
+    stats.increment(`api.assignments.postSubmission.calls`)
     const { submission_url } = req.body;
     const assignmentId = req.params.id;
     const accountId = req.account.id;
