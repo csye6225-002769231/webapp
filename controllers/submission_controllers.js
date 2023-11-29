@@ -122,6 +122,7 @@ const createSubmission = async (req, res) => {
                     email: userEmail,
                     submission_url: reqSubmission.submission_url,
                     fname: req.account.first_name,
+                    lname: req.account.last_name,
                     assignmentName: assignment.name,
                     submissionDate: submission.submission_updated,
                     submissionid: submission.id,
