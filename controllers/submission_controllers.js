@@ -90,7 +90,7 @@ const createSubmission = async (req, res) => {
             const currentDate = new Date();
             if (currentDate > dueDate) {
                 customLogger(logger, 'error', 'Submission deadline has passed', null, req.method)
-                res.status(400).send();
+                res.status(403).send();
                 return;
             }
 
@@ -103,7 +103,7 @@ const createSubmission = async (req, res) => {
 
             if (submissionsCount >= assignment.num_of_attempts) {
                 customLogger(logger, 'error', 'Attempts Exceeded', null, req.method)
-                res.status(400).send();
+                res.status(403).send();
             } else {
                 const submission = await Submission.create({
                     submission_url,
