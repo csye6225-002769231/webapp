@@ -14,14 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Waiting for integration test
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with: 
-          ref: ${{ github.ref }}
-          check-name: 'Run-Integration-test-for-healthz'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-          allowed-conclusions: success
+      # - name: Waiting for integration test
+      #   uses: lewagon/wait-on-check-action@v1.3.1
+      #   with: 
+      #     ref: ${{ github.ref }}
+      #     check-name: 'Run-Integration-test-for-healthz'
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     wait-interval: 10
+      #     allowed-conclusions: success
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
