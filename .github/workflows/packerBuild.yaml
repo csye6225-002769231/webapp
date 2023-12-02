@@ -73,6 +73,7 @@ jobs:
           LAUNCH_TEMPLATE_NAME="webapp-lc"
           # Retrieve the latest launch template version number
           LATEST=$(aws ec2 describe-launch-template-versions --launch-template-name "$LAUNCH_TEMPLATE_NAME" --query 'LaunchTemplateVersions[-1].VersionNumber' --output text)
+          echo "Latest version: $LATEST"
           # Create a new launch template version
           LAUNCH_TEMPLATE_VERSION=$(aws ec2 create-launch-template-version --launch-template-name "$LAUNCH_TEMPLATE_NAME" --source-version "$LATEST" --launch-template-data "{\"ImageId\":\"${{ env.AMI_ID }}\"}" --query 'LaunchTemplateVersion.VersionNumber' --output text)
           echo "Launch template version: $LAUNCH_TEMPLATE_VERSION"
@@ -80,12 +81,15 @@ jobs:
       - name: Update Auto Scaling Group
         run: |
           # Update the Auto Scaling group to use the new launch template version
+          echo "Updating ASG with launch template version: $LAUNCH_TEMPLATE_VERSION"
           aws autoscaling update-auto-scaling-group --auto-scaling-group-name asg --launch-template "LaunchTemplateName=webapp-lc,Version=$LAUNCH_TEMPLATE_VERSION"
 
       - name: Trigger Instance Refresh
         run: |
           # Start an instance refresh for the Auto Scaling group
+          echo "Starting instance refresh for ASG"
           aws autoscaling start-instance-refresh --auto-scaling-group-name asg --strategy Rolling
+
 
 
 
