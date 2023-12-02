@@ -81,6 +81,7 @@ jobs:
             exit 1
           fi
           echo "Launch template version: $LAUNCH_TEMPLATE_VERSION"
+          echo "LAUNCH_TEMPLATE_VERSION=$LAUNCH_TEMPLATE_VERSION" >> $GITHUB_ENV
 
       - name: Update Auto Scaling Group
         run: |
