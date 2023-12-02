@@ -7,7 +7,7 @@ on:
 
 jobs:
   Run-Packer-Build-Check:
-    if: github.repository == 'csye6225-002769231/webapp' && github.ref == 'refs/heads/main'
+    # if: github.repository == 'csye6225-002769231/webapp' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
