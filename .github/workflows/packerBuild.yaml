@@ -51,10 +51,10 @@ jobs:
       - name: Build AMI and Extract AMI ID
         id: build-ami
         run: |
-          PACKER_OUTPUT=$(packer build aws.pkr.hcl)
-          echo "PACKER_OUTPUT=$PACKER_OUTPUT" >> $GITHUB_ENV
-          AMI_ID=$(echo "$PACKER_OUTPUT" | grep -oP Found Image ID: \K(ami-[a-zA-Z0-9]+))
-          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
+            PACKER_OUTPUT=$(packer build aws.pkr.hcl)
+            AMI_ID=$(echo "$PACKER_OUTPUT" | grep -oP 'AMI: \K(ami-[a-zA-Z0-9]+)')
+            echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
+            echo "::set-output name=ami_id::$AMI_ID"       
         env:
           AMI_USER_DEMO: ${{ secrets.AMI_USER_DEMO }}
           PKR_VAR_aws-region: ${{ secrets.AWS_REGION }}
