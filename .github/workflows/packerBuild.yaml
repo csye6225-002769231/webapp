@@ -48,21 +48,17 @@ jobs:
         run: |
           packer init aws.pkr.hcl
 
-      - name: Build AMI
-        id: build-ami
+      - name: Build AMI and Extract AMI ID
         run: |
           PACKER_OUTPUT=$(packer build aws.pkr.hcl)
           echo "PACKER_OUTPUT=$PACKER_OUTPUT" >> $GITHUB_ENV
+          AMI_ID=$(echo "$PACKER_OUTPUT" | grep -oP 'Found Image ID: \K(ami-[a-zA-Z0-9]+)')
+          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
         env:
           AMI_USER_DEMO: "${{secrets.AMI_USER_DEMO}}" 
           PKR_VAR_aws-region: "${{ secrets.AWS_REGION }}"
           PKR_VAR_source-ami: "${{ secrets.SOURCE_AMI }}"
           PKR_VAR_subnet-id: "${{ secrets.SUBNET_ID }}"
-
-      - name: Extract AMI ID
-        run: |
-          AMI_ID=$(echo "$PACKER_OUTPUT" | grep -oP 'AMI: \K(ami-[a-zA-Z0-9]+)')
-          echo "AMI_ID=$AMI_ID" >> $GITHUB_ENV
 
       - name: AWS Configure
         uses: aws-actions/configure-aws-credentials@v4
