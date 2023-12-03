@@ -90,9 +90,3 @@ jobs:
         run: |
           echo "Starting instance refresh for ASG"
           aws autoscaling start-instance-refresh --auto-scaling-group-name asg --strategy Rolling
-
-
-
-
-
-      
