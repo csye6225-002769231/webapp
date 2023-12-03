@@ -81,10 +81,10 @@ jobs:
           echo "Launch template version: $LAUNCH_TEMPLATE_VERSION"
           echo "LAUNCH_TEMPLATE_VERSION=$LAUNCH_TEMPLATE_VERSION" >> $GITHUB_ENV
 
-      - name: Update Auto Scaling Group
-        run: |
-          echo "Updating ASG with launch template version: $LAUNCH_TEMPLATE_VERSION"
-          aws autoscaling update-auto-scaling-group --auto-scaling-group-name asg --launch-template "LaunchTemplateName=webapp-lc,Version=$LAUNCH_TEMPLATE_VERSION"
+      # - name: Update Auto Scaling Group
+      #   run: |
+      #     echo "Updating ASG with launch template version: $LAUNCH_TEMPLATE_VERSION"
+      #     aws autoscaling update-auto-scaling-group --auto-scaling-group-name asg --launch-template "LaunchTemplateName=webapp-lc,Version=$LAUNCH_TEMPLATE_VERSION"
 
       - name: Trigger Instance Refresh
         run: |
