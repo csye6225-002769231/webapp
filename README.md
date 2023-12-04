@@ -93,7 +93,7 @@ To run this project, you will need to add the following environment variables to
 
 ### Configuration
 
-1. To install nodeJS:
+1. To install NodeJS:
 
    ```bash
     sudo apt install -y nodejs npm postgresql
