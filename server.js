@@ -94,25 +94,25 @@ app.all('/healthz', async (req, res) => {
 });
 
 app.use(express.json())
-app.post('/v2/assignments/:id/submission', basicAuth.basicAuth, submission_controllers.createSubmission);
+app.post('/v1/assignments/:id/submission', basicAuth.basicAuth, submission_controllers.createSubmission);
 
-app.all('/v2/assignments/:id/submission', (req, res) => {
+app.all('/v1/assignments/:id/submission', (req, res) => {
   if (req.method !== 'POST') {
     customLogger(logger, 'error', 'Method Not Allowed', null, req.method);
     res.status(405).send(); // Method not allowed
   }
 });
 
-app.post('/v2/assignments', basicAuth.basicAuth, assignment_controllers.createAssignment);
+app.post('/v1/assignments', basicAuth.basicAuth, assignment_controllers.createAssignment);
 
-// app.post('/v2/assignments/*', (req, res) => {
+// app.post('/v1/assignments/*', (req, res) => {
 //   customLogger(logger, 'error', 'Cannot Post by ID', null, req.method)
 //   res.status(404).send();
 // });
-app.get('/v2/assignments', basicAuth.basicAuth, assignment_controllers.getAllAssignments);
-app.get('/v2/assignments/:id', basicAuth.basicAuth, assignment_controllers.getAssignmentById);
-app.put('/v2/assignments/:id', basicAuth.basicAuth, assignment_controllers.updateAssignment);
-app.delete('/v2/assignments/:id', basicAuth.basicAuth, assignment_controllers.deleteAssignment);
+app.get('/v1/assignments', basicAuth.basicAuth, assignment_controllers.getAllAssignments);
+app.get('/v1/assignments/:id', basicAuth.basicAuth, assignment_controllers.getAssignmentById);
+app.put('/v1/assignments/:id', basicAuth.basicAuth, assignment_controllers.updateAssignment);
+app.delete('/v1/assignments/:id', basicAuth.basicAuth, assignment_controllers.deleteAssignment);
 
 app.all('/*', (req, res) => {
   if (req.method === 'PATCH' || req.method === 'HEAD' || req.method === 'OPTIONS') {
