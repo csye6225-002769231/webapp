@@ -85,8 +85,10 @@ jobs:
       - name: Refresh Auto-Scaling Group
         if: env.TEMPLATE_EXISTS == 'true'
         run: |
+          aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.autoScaling_name}} --strategy "Rolling"
+
           while : ; do
-            STATUS=$(aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.autoScaling_name}} --strategy "Rolling")
+            STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name ${{secrets.autoScaling_name}} --query 'InstanceRefreshes[0].Status' --output text)
             if [[ "$STATUS" == "Successful" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" ]]; then
               echo "Instance refresh completed with status: $STATUS"
               break
@@ -94,4 +96,3 @@ jobs:
             echo "Waiting for instance refresh to complete..."
             sleep 60
           done
-
