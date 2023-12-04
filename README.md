@@ -104,6 +104,11 @@ To run this project, you will need to add the following environment variables to
     cd your-project
     npm i
 
+3. To setup certificate using AWS CLI:
+
+   ```bash
+    sudo aws acm import-certificate --certificate fileb://demo_kshitijprabhu_me.crt --private-key fileb://private.key --certificate-chain fileb://demo_kshitijprabhu_me.ca-bundle --region us-east-1 --profile demo
+
 ## Deployment
 
    ```bash
