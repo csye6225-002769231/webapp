@@ -67,12 +67,33 @@ jobs:
           aws-access-key-id: ${{secrets.DEMO_ASG_ACCESS_KEY}}
           aws-secret-access-key: ${{secrets.DEMO_ASG_SECRET_ACCESS_KEY}}
           aws-region: us-east-1
+      
+      - name: Check Launch Template Existence
+        id: check_template
+        run: |
+          TEMPLATE_EXISTS=$(aws ec2 describe-launch-templates --launch-template-names ${{secrets.lt_name}} --query 'LaunchTemplates[?LaunchTemplateName==`'${{secrets.lt_name}}'`].LaunchTemplateName' --output text)
+          if [ "$TEMPLATE_EXISTS" == "${{secrets.lt_name}}" ]; then
+            echo "TEMPLATE_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "Launch template not found. Exiting..."
+            exit 0
+          fi
 
       - name: Update Launch Template
+        if: env.TEMPLATE_EXISTS == 'true'
         run: |
           aws ec2 create-launch-template-version --launch-template-name ${{secrets.lt_name}} --source-version "\$Default" --launch-template-data "{\"ImageId\":\"${{ env.AMI_ID }}\"}"
       
       - name: Refresh Auto-Scaling Group
-        id: refresh_asg
+        if: env.TEMPLATE_EXISTS == 'true'
         run: |
-          aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.autoScaling_name}} --strategy "Rolling"
+          while : ; do
+            STATUS=$(aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.autoScaling_name}} --strategy "Rolling")
+            if [[ "$STATUS" == "Successful" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" ]]; then
+              echo "Instance refresh completed with status: $STATUS"
+              break
+            fi
+            echo "Waiting for instance refresh to complete..."
+            sleep 60
+          done
+
