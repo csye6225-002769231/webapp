@@ -69,14 +69,12 @@ jobs:
           aws-region: us-east-1
       
       - name: Check Launch Template Existence
-        id: check_template
         run: |
-          TEMPLATE_EXISTS=$(aws ec2 describe-launch-templates --launch-template-names ${{secrets.lt_name}} --query 'LaunchTemplates[?LaunchTemplateName==`'${{secrets.lt_name}}'`].LaunchTemplateName' --output text)
-          if [ "$TEMPLATE_EXISTS" == "${{secrets.lt_name}}" ]; then
-            echo "TEMPLATE_EXISTS=true" >> $GITHUB_ENV
+          TEMPLATE_EXISTS=$(aws ec2 describe-launch-templates --launch-template-names ${{secrets.lt_name}} --query 'LaunchTemplates[0]' --output text)
+          if [ "$TEMPLATE_EXISTS" == "None" ]; then
+            echo "TEMPLATE_EXISTS=false" >> $GITHUB_ENV
           else
-            echo "Launch template not found. Exiting..."
-            exit 0
+            echo "TEMPLATE_EXISTS=true" >> $GITHUB_ENV
           fi
 
       - name: Update Launch Template
