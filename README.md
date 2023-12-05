@@ -132,8 +132,6 @@ Before executing the command, ensure you have the following:
 To import your SSL/TLS certificate into AWS ACM, use the following command structure:
 
 ```bash
-sudo aws acm import-certificate --certificate fileb://(certificate_name).crt --private-key fileb://(private_key_filename).key --certificate-chain fileb://(ca_bundle_certificate_name).ca-bundle --region (region_imported_to) --profile (profile_imported_to)
+sudo aws acm import-certificate --certificate fileb://(path_to_your_file).crt --private-key fileb://(path_to_your_file).key --certificate-chain fileb://(path_to_your_file).ca-bundle --region us-east-1 --profile (profile_imported_to)
 ```
-Example:
-```bash
-sudo aws acm import-certificate --certificate fileb://demo_kshitijprabhu_me.crt --private-key fileb://private.key --certificate-chain fileb://demo_kshitijprabhu_me.ca-bundle --region us-east-1 --profile demo
+Please Replace the Paths in the above command according to your file paths
