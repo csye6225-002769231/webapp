@@ -98,4 +98,5 @@ jobs:
             else 
               echo "waiting for instance refresh"
               sleep 30
+            fi
           done
