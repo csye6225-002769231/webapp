@@ -89,10 +89,13 @@ jobs:
 
           while : ; do
             STATUS=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name ${{secrets.autoScaling_name}} --query 'InstanceRefreshes[0].Status' --output text)
-            if [[ "$STATUS" == "Successful" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" ]]; then
+            if [[ "$STATUS" == "Successful"]]; then
               echo "Instance refresh completed with status: $STATUS"
               break
-            fi
-            echo "Waiting for instance refresh to complete..."
-            sleep 60
+            elif [["$STATUS" == "Cancelled"]]
+              echo "instance refresh failed"
+              exit 1
+            else 
+              echo "waiting for instance refresh"
+              sleep 30
           done
